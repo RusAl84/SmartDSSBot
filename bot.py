@@ -20,7 +20,7 @@ def get_text_messages(message):
         fc=True
         fm=False
         fd=False
-        bot.send_message(message.from_user.id, "Введите минимальную имаксимальную стоимость (в рублях):")
+        bot.send_message(message.from_user.id, "Введите минимальную и максимальную стоимость (в рублях):")
     else:
         bot.send_message(message.from_user.id, helpStr)
 
