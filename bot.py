@@ -1,4 +1,3 @@
-from os import fchdir
 from webbrowser import get
 import telebot;
 import json
@@ -63,8 +62,6 @@ def initData():
     jsonContent = fileObject.read()
     aList = json.loads(jsonContent)
     qList=copy.deepcopy(aList)
-    
-
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -75,23 +72,23 @@ def get_text_messages(message):
     splitted_text = str(message.text).lower().split()
     if fc:
         initData()
-        fCost(splitted_text[0], splitted_text[1])
+        fCost(int(splitted_text[0]), int(splitted_text[1]))
         fc=False
         fm=True
         fd=False
         bot.send_message(message.from_user.id, "Введите минимальное и максимальное количество RAM (в Гб):")
-    if fm:
-        fRam(splitted_text[0], splitted_text[1])
+    elif fm:
+        fRam(int(splitted_text[0]), int(splitted_text[1]))
         fc=False
         fm=False
         fd=True
         bot.send_message(message.from_user.id, "Введите минимальную и максимальную диагональ (в дюймах):")
-    if fd:
-        fDiag(splitted_text[0], splitted_text[1])
+    elif fd:
+        fDiag(float(splitted_text[0]), float(splitted_text[1]))
         fc=False
         fm=False
         fd=False
-        str1  = "/n ПО Вашему запросу Вам подойдут: \n\n" + printJson()
+        str1  = "По Вашему запросу Вам подойдут: \n\n" + printJson()
         bot.send_message(message.from_user.id, str1)
     elif str(message.text).lower() == "привет":
         bot.send_message(message.from_user.id, helpStr)
@@ -99,7 +96,7 @@ def get_text_messages(message):
         str1="SmartDSSBot - Интеллектуальный Telegram Бот для помощи в выборе смартфона. \n Список команд: "\
             "\n /s - начать подбор \n Для информации введите /help."
         bot.send_message(message.from_user.id, str1) 
-    elif str(message.text).lower() == "\s":
+    elif str(message.text).lower() == "/s":
         fc=True
         fm=False
         fd=False
